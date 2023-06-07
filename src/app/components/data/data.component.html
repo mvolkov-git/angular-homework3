@@ -1,0 +1,11 @@
+<div>
+  <input [(ngModel)]="name" placeholder="Input model..." [textContent]="ddd"/>
+  <button (click)="addItem(name)">Add</button>
+  <p><span>Total count: </span>{{counter}}</p>
+  <p>---------------------------------</p>
+  <table>
+    <tr *ngFor="let item of items">
+      <td>{{item}}</td>
+    </tr>
+  </table>
+</div>
