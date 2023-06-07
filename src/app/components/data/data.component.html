@@ -3,6 +3,12 @@
   <button (click)="addItem(name)">Add</button>
   <p><span>Total count: </span>{{counter}}</p>
   <p>---------------------------------</p>
+  <span>{{counter$ | async}}</span>
+
+  <!-- <button (click)="subtract()">-</button>
+
+  <button (click)="add()">+</button> -->
+  <p>-----------------</p>
   <table>
     <tr *ngFor="let item of items">
       <td>{{item}}</td>
