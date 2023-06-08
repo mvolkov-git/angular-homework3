@@ -8,13 +8,17 @@
             <tr *ngFor="let question of quesions">
               <td>
                 <!-- <button class="question selected-question" (click)="resetExam()">{{question.content}}</button> -->
-                <button class="question selected-question"
-                  [ngStyle]="{'background-color': (question.status === 1) ? 'greenyellow' : 'lightgray' }"
-                  (click)="selectQuestion(question)">{{question.content}}</button>
+                <button class="question selected-question" [ngStyle]="{'background-color': (question.status === 1)
+                        ? 'greenyellow'
+                        : (question.status === 2)
+                            ? 'lightblue'
+                            : (question.status === 3)
+                                ? 'red'
+                                : 'lightgray' }" (click)="selectQuestion(question)">{{question.content}}</button>
               </td>
             </tr>
           </table>
-          <h4>Your grade is: {{grade}}</h4>
+          <h4>Your grade is: {{grade}}%</h4>
         </div>
       </td>
       <td class="padding-left">
@@ -28,7 +32,7 @@
             <tr>
               <div>
                 <td *ngFor="let answer of answers">
-                  <button class='answer' (click)="checkAnswer()">{{answer}}</button>
+                  <button class='answer' (click)="checkAnswer(answer)">{{answer}}</button>
                 </td>
               </div>
             </tr>

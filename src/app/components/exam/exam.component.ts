@@ -4,13 +4,15 @@ import { sum } from '../util/math.util';
 enum questionStatuses {
   new = 0,
   selected = 1,
-  answered = 2,
-  mistaked = 3,
+  correct = 2,
+  wrong = 3,
 }
 
 type questionType = {
   content: string;
   status: questionStatuses;
+  correctAnswer: number;
+  studentAnswer?: number;
 };
 
 @Component({
@@ -25,40 +27,46 @@ export class ExamComponent {
   correctAnswers: number[] = [4, 5, 7];
   selectedQuestion: questionType | undefined;
   quesions: questionType[] = [
-    { content: '2+2', status: questionStatuses.new },
-    { content: '12+3', status: questionStatuses.new },
-    { content: '1+6', status: questionStatuses.new },
-    { content: '55+18', status: questionStatuses.new },
-    { content: '10+81', status: questionStatuses.new },
+    { content: '2+2', status: questionStatuses.new, correctAnswer: 4 },
+    { content: '12+3', status: questionStatuses.new, correctAnswer: 15 },
+    { content: '1+6', status: questionStatuses.new, correctAnswer: 7 },
+    { content: '55+18', status: questionStatuses.new, correctAnswer: 73 },
+    { content: '10+81', status: questionStatuses.new, correctAnswer: 91 },
   ];
-  displayedQuestion: string ="";
-
+  displayedQuestion: string = '';
   grade: number = 0;
+  toggle = true;
 
   private _answers: number[] = [];
-
   public get answers() {
     return this._answers;
   }
 
-  constructor() {
-    //  question = new questionType {}
-  }
+  constructor() {}
 
-  fillRandomArray() {
-    return Array(5) // array size is 5
+  fillRandomArray(correctAnswer: number) {
+    let correctAnswernum: number = Math.floor(Math.random() * 4);
+    let arr = Array(4) // array size is 5
       .fill(undefined)
       .map(() => Math.floor(50 * Math.random())); // numbers from 0-50 (exclusive)
+    arr[correctAnswernum] = correctAnswer;
+    return arr;
   }
 
   selectQuestion(question: questionType) {
-    this.selectedQuestion = question;
-    this.selectedQuestion.status = questionStatuses.selected;
-    console.log(this.selectedQuestion.content)
+    if (question.status == questionStatuses.new) {
+      this.selectedQuestion = question;
+      this.selectedQuestion.status = questionStatuses.selected;
+      this._answers = this.fillRandomArray(this.selectedQuestion.correctAnswer);
+      console.log(question.status);
+      console.log(this.selectedQuestion.content);
+    }
   }
 
   getSelectedQuestionContent() {
-    return (this.selectedQuestion == null ? "" : this.selectedQuestion.content)
+    return this.selectedQuestion == null
+      ? ''
+      : this.selectedQuestion.content + ' = ' + (this.selectedQuestion.studentAnswer ?? "" );
   }
   // selectQuestion(i:number) {
   //   this.quesions[i].status = questionStatuses.selected;
@@ -67,8 +75,8 @@ export class ExamComponent {
   // }
 
   resetExam() {
-    alert("xcv");
-    console.log("resetExam")
+    alert('xcv');
+    console.log('resetExam');
   }
 
   setQuestionStatus(question: questionType, status: questionStatuses) {
@@ -77,15 +85,29 @@ export class ExamComponent {
   }
 
   ngOnInit() {
-    this._answers = this.fillRandomArray();
+    // this._answers = this.fillRandomArray();
   }
 
-  createNewExam() {
+  checkAnswer(studentAnswer: number) {
+    if (
+      this.selectedQuestion != null &&
+      this.selectedQuestion.status == questionStatuses.selected
+    ) {
+      this.selectedQuestion.studentAnswer = studentAnswer;
+      let result = this.selectedQuestion.correctAnswer == studentAnswer;
+      if (result) {
+        this.selectedQuestion.status = questionStatuses.correct;
+        this.grade = this.grade + 20;
+      } else {
+        this.selectedQuestion.status = questionStatuses.wrong;
+      }
+      // this._answers = [];
+      this.toggle = !this.toggle;
+      console.log(result);
+    }
   }
-
-  checkAnswer() {}
 
   isAnswerCorrect(questNum: number, studentAnswer: number): boolean {
-    return this.correctAnswers[questNum] === studentAnswer;
+    return this.correctAnswers[questNum] == studentAnswer;
   }
 }
