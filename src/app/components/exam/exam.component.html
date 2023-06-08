@@ -7,8 +7,10 @@
           <table>
             <tr *ngFor="let question of quesions">
               <td>
-                <!-- <button class="question active-question" (click)="resetExam()">{{question.content}}</button> -->
-                <button class="question selected-question" (click)="resetExam()">{{question.content}}</button>
+                <!-- <button class="question selected-question" (click)="resetExam()">{{question.content}}</button> -->
+                <button class="question selected-question"
+                  [ngStyle]="{'background-color': (question.status === 1) ? 'greenyellow' : 'lightgray' }"
+                  (click)="selectQuestion(question)">{{question.content}}</button>
               </td>
             </tr>
           </table>
@@ -19,9 +21,16 @@
         <div class="answer-pad">
           <table>
             <tr>
-              <td *ngFor="let answer of answers">
-                <button class='answer' (click)="checkAnswer()">{{answer}}</button>
+              <td>
+                <div class="selected-query-content">{{getSelectedQuestionContent()}}</div>
               </td>
+            </tr>
+            <tr>
+              <div>
+                <td *ngFor="let answer of answers">
+                  <button class='answer' (click)="checkAnswer()">{{answer}}</button>
+                </td>
+              </div>
             </tr>
           </table>
 

@@ -23,7 +23,7 @@ export class ExamComponent {
   term1: number[] = [0, 0, 0, 0, 0];
   term2: number[] = [0, 0, 0, 0, 0];
   correctAnswers: number[] = [4, 5, 7];
-  question: questionType | undefined;
+  selectedQuestion: questionType | undefined;
   quesions: questionType[] = [
     { content: '2+2', status: questionStatuses.new },
     { content: '12+3', status: questionStatuses.new },
@@ -31,6 +31,7 @@ export class ExamComponent {
     { content: '55+18', status: questionStatuses.new },
     { content: '10+81', status: questionStatuses.new },
   ];
+  displayedQuestion: string ="";
 
   grade: number = 0;
 
@@ -49,6 +50,21 @@ export class ExamComponent {
       .fill(undefined)
       .map(() => Math.floor(50 * Math.random())); // numbers from 0-50 (exclusive)
   }
+
+  selectQuestion(question: questionType) {
+    this.selectedQuestion = question;
+    this.selectedQuestion.status = questionStatuses.selected;
+    console.log(this.selectedQuestion.content)
+  }
+
+  getSelectedQuestionContent() {
+    return (this.selectedQuestion == null ? "" : this.selectedQuestion.content)
+  }
+  // selectQuestion(i:number) {
+  //   this.quesions[i].status = questionStatuses.selected;
+  //   this.quesions[i].content = "selected"
+  //   console.log(this.quesions[i].content)
+  // }
 
   resetExam() {
     alert("xcv");
