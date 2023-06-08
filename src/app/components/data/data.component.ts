@@ -12,7 +12,8 @@ export class DataComponent {
   name: string = '';
   cutOff = 0;
 
-  counter = this.dataService.counter;
+  counter = 0;
+  myMethodTesterCounter = 0;
 
   counter$: Observable<number> = this.dataService.counter$.pipe(
     //delay(2000)
@@ -21,10 +22,9 @@ export class DataComponent {
   );
 
   subs = new Subscription();
-  foo() {
-    this.subs.add(
-      this.dataService.myMethod().subscribe((arg) => (this.counter = arg))
-    );
+
+  getData() {
+    return this.dataService.getData();
   }
 
   constructor(private dataService: DataService) {}
@@ -32,11 +32,21 @@ export class DataComponent {
   addItem(name: string) {
     this.dataService.addData(name);
     this.counter = this.dataService.counter;
-    this.foo();
+    this.myMethodTesterCounter = this.dataService.myMethodTesterCounter;
   }
 
   ngOnInit() {
     this.items = this.dataService.getData();
     this.counter = this.dataService.counter;
+
+    this.subs.add(
+      this.dataService.myMethod().subscribe((arg) => {
+        // alert(this.dataService.myMethodTesterCounter);
+        console.log('myMethod called');
+      })
+    );
+    // this.subs.add(
+    //   this.counter$.subscribe((arg) => this.myMethodTesterCounter++)
+    // );
   }
 }

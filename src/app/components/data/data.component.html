@@ -1,9 +1,12 @@
 <div>
   <input [(ngModel)]="name" placeholder="Input model..."/>
   <button (click)="addItem(name)">Add</button>
-  <p><span>Total count: </span>{{counter}}</p>
+  <p><span>Not observable: </span>{{counter}}</p>
+  <p><span>myMethod called: </span>{{myMethodTesterCounter}}</p>
+  <div>getData: {{getData()}}</div>
+
   <p>---------------------------------</p>
-  <span>{{counter$ | async}}</span>
+  <span>Observable: {{counter$ | async}}</span>
 
   <!-- <button (click)="subtract()">-</button>
 

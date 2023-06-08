@@ -1,1 +1,33 @@
 <p>exam works!</p>
+<div>
+  <table>
+    <tr style="vertical-align: top;">
+      <td>
+        <div>
+          <table>
+            <tr *ngFor="let question of quesions">
+              <td>
+                <!-- <button class="question active-question" (click)="resetExam()">{{question.content}}</button> -->
+                <button class="question selected-question" (click)="resetExam()">{{question.content}}</button>
+              </td>
+            </tr>
+          </table>
+          <h4>Your grade is: {{grade}}</h4>
+        </div>
+      </td>
+      <td class="padding-left">
+        <div class="answer-pad">
+          <table>
+            <tr>
+              <td *ngFor="let answer of answers">
+                <button class='answer' (click)="checkAnswer()">{{answer}}</button>
+              </td>
+            </tr>
+          </table>
+
+        </div>
+      </td>
+    </tr>
+  </table>
+
+</div>
