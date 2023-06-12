@@ -9,9 +9,9 @@
               <td>
                 <!-- <button class="question selected-question" (click)="resetExam()">{{question.content}}</button> -->
                 <button class="question selected-question" [ngStyle]="{'background-color': (question.status === 1)
-                        ? 'greenyellow'
+                        ? 'lightblue'
                         : (question.status === 2)
-                            ? 'lightblue'
+                            ? 'lightgreen'
                             : (question.status === 3)
                                 ? 'red'
                                 : 'lightgray' }" (click)="selectQuestion(question)">{{question.content}}</button>
