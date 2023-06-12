@@ -23,13 +23,7 @@ type questionType = {
   styleUrls: ['./exam.component.scss'],
 })
 export class ExamComponent {
-  // quesions_old: string[] = ['2+2', '12+3', '1+6', '55+18', '10+81'];
-  term1: number[] = [0, 0, 0, 0, 0];
-  term2: number[] = [0, 0, 0, 0, 0];
-  correctAnswers: number[] = [4, 5, 7];
   selectedQuestion: questionType | undefined;
-  // quesions: questionType[] | undefined;
-
   displayedQuestion: string = '';
   grade: number = 0;
   toggle = true;
@@ -43,14 +37,7 @@ export class ExamComponent {
 
   quesions$: Observable<questionType[]> = this.service.quesions$;
 
-  fillRandomArray(correctAnswer: number) {
-    let correctAnswernum: number = Math.floor(Math.random() * 4);
-    let arr = Array(4) // array size is 5
-      .fill(undefined)
-      .map(() => Math.floor(50 * Math.random())); // numbers from 0-50 (exclusive)
-    arr[correctAnswernum] = correctAnswer;
-    return arr;
-  }
+  // answers$: Observable<number[]> = this.service.answers$;
 
   selectQuestion(question: questionType) {
     let enabled: boolean = true;
@@ -64,19 +51,14 @@ export class ExamComponent {
           ) {
             enabled = false;
             // alert('Answer to selected question');
-
-            // return;
           }
-          // console.log(value[i]);
         }
-
-        // console.log(value[0].status);
       });
 
       if (enabled) {
         this.selectedQuestion = question;
         this.selectedQuestion.status = questionStatuses.selected;
-        this._answers = this.fillRandomArray(
+        this._answers = this.service.fillAnswers(
           this.selectedQuestion.correctAnswer
         );
         // console.log(question.status);
@@ -89,8 +71,10 @@ export class ExamComponent {
     return this.selectedQuestion == null
       ? ''
       : this.selectedQuestion.content +
-          ' = ' +
-          (this.selectedQuestion.studentAnswer ?? '');
+          (this.selectedQuestion.status === questionStatuses.wrong
+            ? ' ≠ '
+            : ' = ') +
+          (this.selectedQuestion.studentAnswer ?? '?');
   }
 
   resetExam() {
@@ -124,9 +108,5 @@ export class ExamComponent {
       this.toggle = !this.toggle;
       console.log(result);
     }
-  }
-
-  isAnswerCorrect(questNum: number, studentAnswer: number): boolean {
-    return this.correctAnswers[questNum] == studentAnswer;
   }
 }

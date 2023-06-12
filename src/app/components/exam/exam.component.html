@@ -8,7 +8,7 @@
         <div>
           <table>
             <tr *ngFor="let question of quesions$ | async">
-              <td>
+              <td style="width: 150px;">
                 <!-- <button class="question selected-question" (click)="resetExam()">{{question.content}}</button> -->
                 <button class="question selected-question" [ngStyle]="{'background-color': (question.status === 1)
                         ? 'lightblue'
@@ -39,10 +39,8 @@
               </div>
             </tr>
           </table>
-
         </div>
       </td>
     </tr>
   </table>
-
 </div>
