@@ -1,11 +1,12 @@
 <p>exam works!</p>
 <div>
+  <!-- <span>{{quesions$ | async}}</span> -->
   <table>
     <tr style="vertical-align: top;">
       <td>
         <div>
           <table>
-            <tr *ngFor="let question of quesions">
+            <tr *ngFor="let question of quesions$ | async">
               <td>
                 <!-- <button class="question selected-question" (click)="resetExam()">{{question.content}}</button> -->
                 <button class="question selected-question" [ngStyle]="{'background-color': (question.status === 1)

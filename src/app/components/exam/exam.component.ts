@@ -1,5 +1,7 @@
 import { Component, Injectable, Input } from '@angular/core';
 import { sum } from '../util/math.util';
+import { ExamService } from 'src/app/services/exam.service';
+import { Observable, map } from 'rxjs';
 
 enum questionStatuses {
   new = 0,
@@ -26,13 +28,14 @@ export class ExamComponent {
   term2: number[] = [0, 0, 0, 0, 0];
   correctAnswers: number[] = [4, 5, 7];
   selectedQuestion: questionType | undefined;
-  quesions: questionType[] = [
-    { content: '2+2', status: questionStatuses.new, correctAnswer: 4 },
-    { content: '12+3', status: questionStatuses.new, correctAnswer: 15 },
-    { content: '1+6', status: questionStatuses.new, correctAnswer: 7 },
-    { content: '55+18', status: questionStatuses.new, correctAnswer: 73 },
-    { content: '10+81', status: questionStatuses.new, correctAnswer: 91 },
-  ];
+  quesions: questionType[] | undefined;
+  // quesions: questionType[] = [
+  //   { content: '2+2', status: questionStatuses.new, correctAnswer: 4 },
+  //   { content: '12+3', status: questionStatuses.new, correctAnswer: 15 },
+  //   { content: '1+6', status: questionStatuses.new, correctAnswer: 7 },
+  //   { content: '55+18', status: questionStatuses.new, correctAnswer: 73 },
+  //   { content: '10+81', status: questionStatuses.new, correctAnswer: 91 },
+  // ];
   displayedQuestion: string = '';
   grade: number = 0;
   toggle = true;
@@ -42,7 +45,11 @@ export class ExamComponent {
     return this._answers;
   }
 
-  constructor() {}
+  constructor(private service: ExamService) {
+  }
+
+  quesions$: Observable<questionType[]> =  this.service.quesions$;
+
 
   fillRandomArray(correctAnswer: number) {
     let correctAnswernum: number = Math.floor(Math.random() * 4);
