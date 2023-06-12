@@ -1,7 +1,7 @@
 import { Component, Injectable, Input } from '@angular/core';
 import { sum } from '../util/math.util';
 import { ExamService } from 'src/app/services/exam.service';
-import { Observable, map } from 'rxjs';
+import { Observable, map, tap } from 'rxjs';
 
 enum questionStatuses {
   new = 0,
@@ -28,14 +28,8 @@ export class ExamComponent {
   term2: number[] = [0, 0, 0, 0, 0];
   correctAnswers: number[] = [4, 5, 7];
   selectedQuestion: questionType | undefined;
-  quesions: questionType[] | undefined;
-  // quesions: questionType[] = [
-  //   { content: '2+2', status: questionStatuses.new, correctAnswer: 4 },
-  //   { content: '12+3', status: questionStatuses.new, correctAnswer: 15 },
-  //   { content: '1+6', status: questionStatuses.new, correctAnswer: 7 },
-  //   { content: '55+18', status: questionStatuses.new, correctAnswer: 73 },
-  //   { content: '10+81', status: questionStatuses.new, correctAnswer: 91 },
-  // ];
+  // quesions: questionType[] | undefined;
+
   displayedQuestion: string = '';
   grade: number = 0;
   toggle = true;
@@ -45,11 +39,9 @@ export class ExamComponent {
     return this._answers;
   }
 
-  constructor(private service: ExamService) {
-  }
+  constructor(private service: ExamService) {}
 
-  quesions$: Observable<questionType[]> =  this.service.quesions$;
-
+  quesions$: Observable<questionType[]> = this.service.quesions$;
 
   fillRandomArray(correctAnswer: number) {
     let correctAnswernum: number = Math.floor(Math.random() * 4);
@@ -61,25 +53,45 @@ export class ExamComponent {
   }
 
   selectQuestion(question: questionType) {
+    let enabled: boolean = true;
     if (question.status == questionStatuses.new) {
-      this.selectedQuestion = question;
-      this.selectedQuestion.status = questionStatuses.selected;
-      this._answers = this.fillRandomArray(this.selectedQuestion.correctAnswer);
-      console.log(question.status);
-      console.log(this.selectedQuestion.content);
+      this.quesions$.forEach(function (value) {
+        for (let i = 0; i < 5; i++) {
+          // console.log(i + " - " + value.indexOf(question));
+          if (
+            value[i].status === questionStatuses.selected &&
+            value.indexOf(question) != i
+          ) {
+            enabled = false;
+            // alert('Answer to selected question');
+
+            // return;
+          }
+          // console.log(value[i]);
+        }
+
+        // console.log(value[0].status);
+      });
+
+      if (enabled) {
+        this.selectedQuestion = question;
+        this.selectedQuestion.status = questionStatuses.selected;
+        this._answers = this.fillRandomArray(
+          this.selectedQuestion.correctAnswer
+        );
+        // console.log(question.status);
+        // console.log(this.selectedQuestion.content);
+      }
     }
   }
 
   getSelectedQuestionContent() {
     return this.selectedQuestion == null
       ? ''
-      : this.selectedQuestion.content + ' = ' + (this.selectedQuestion.studentAnswer ?? "" );
+      : this.selectedQuestion.content +
+          ' = ' +
+          (this.selectedQuestion.studentAnswer ?? '');
   }
-  // selectQuestion(i:number) {
-  //   this.quesions[i].status = questionStatuses.selected;
-  //   this.quesions[i].content = "selected"
-  //   console.log(this.quesions[i].content)
-  // }
 
   resetExam() {
     alert('xcv');

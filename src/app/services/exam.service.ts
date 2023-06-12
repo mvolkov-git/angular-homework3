@@ -20,29 +20,34 @@ type questionType = {
 })
 export class ExamService {
 
+  term1: number[] = this.fillTerm();
+  term2: number[] = this.fillTerm();
+
   quesions: questionType[] = [
-    { content: '2+2', status: questionStatuses.new, correctAnswer: 4 },
-    { content: '12+3', status: questionStatuses.new, correctAnswer: 15 },
-    { content: '1+6', status: questionStatuses.new, correctAnswer: 7 },
-    { content: '55+18', status: questionStatuses.new, correctAnswer: 73 },
-    { content: '10+81', status: questionStatuses.new, correctAnswer: 91 },
+    { content: `${this.term1[0]} + ${this.term2[0]}`, status: questionStatuses.new, correctAnswer: this.term1[0] + this.term2[0] },
+    { content: `${this.term1[1]} + ${this.term2[1]}`, status: questionStatuses.new, correctAnswer: this.term1[1] + this.term2[1] },
+    { content: `${this.term1[2]} + ${this.term2[2]}`, status: questionStatuses.new, correctAnswer: this.term1[2] + this.term2[2] },
+    { content: `${this.term1[3]} + ${this.term2[3]}`, status: questionStatuses.new, correctAnswer: this.term1[3] + this.term2[3] },
+    { content: `${this.term1[4]} + ${this.term2[4]}`, status: questionStatuses.new, correctAnswer: this.term1[4] + this.term2[4] },
   ];
+
+
 
   private counterSubject = new BehaviorSubject<questionType[]>(this.quesions);
 
-  // getRandomArray(correctAnswer: number) {
-  //   let correctAnswernum: number = Math.floor(Math.random() * 4);
-  //   let arr = Array(4) // array size is 5
-  //     .fill(undefined)
-  //     .map(() => Math.floor(50 * Math.random())); // numbers from 0-50 (exclusive)
-  //   arr[correctAnswernum] = correctAnswer;
-  //   return arr;
-  // }
+   fillTerm() {
+    let arr = Array(5) // array size is 5
+      .fill(undefined)
+      .map(() => Math.floor(50 * Math.random())); // numbers from 0-50 (exclusive)
+    return arr;
+  }
 
   get quesions$(): Observable<questionType[]> {
     return this.counterSubject.asObservable();
 }
-
-
   constructor() { }
+
+  ngOnInit() {
+
+  }
 }
