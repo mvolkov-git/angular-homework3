@@ -1,21 +1,7 @@
 import { Component, Injectable, Input } from '@angular/core';
-import { sum } from '../util/math.util';
 import { ExamService } from 'src/app/services/exam.service';
 import { Observable, map, tap } from 'rxjs';
-
-enum questionStatuses {
-  new = 0,
-  selected = 1,
-  correct = 2,
-  wrong = 3,
-}
-
-type questionType = {
-  content: string;
-  status: questionStatuses;
-  correctAnswer: number;
-  studentAnswer?: number;
-};
+import { questionStatuses, questionType } from 'src/Common';
 
 @Component({
   selector: 'app-exam',
@@ -77,10 +63,10 @@ export class ExamComponent {
           (this.selectedQuestion.studentAnswer ?? '?');
   }
 
-  resetExam() {
-    alert('xcv');
-    console.log('resetExam');
-  }
+  // resetExam() {
+  //   alert('xcv');
+  //   console.log('resetExam');
+  // }
 
   setQuestionStatus(question: questionType, status: questionStatuses) {
     question.status = status;

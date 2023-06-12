@@ -1,19 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-
-enum questionStatuses {
-  new = 0,
-  selected = 1,
-  correct = 2,
-  wrong = 3,
-}
-
-type questionType = {
-  content: string;
-  status: questionStatuses;
-  correctAnswer: number;
-  studentAnswer?: number;
-};
+import { questionStatuses, questionType } from 'src/Common';
 
 @Injectable({
   providedIn: 'root',
