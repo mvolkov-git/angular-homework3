@@ -12,7 +12,6 @@ export class ExamComponent {
   selectedQuestion: questionType | undefined;
   displayedQuestion: string = '';
   grade: number = 0;
-  // toggle = true;
 
   private _answers: number[] = [];
   public get answers() {
@@ -23,7 +22,7 @@ export class ExamComponent {
 
   quesions$: Observable<questionType[]> = this.service.quesions$;
 
-  // answers$: Observable<number[]> = this.service.answers$;
+  answers$: Observable<number[]> = new Observable<number[]>;// = this.service.answers$;
 
   public getQuestionClass(status: questionStatuses) {
     switch (status) {
@@ -69,9 +68,15 @@ export class ExamComponent {
       if (enabled) {
         this.selectedQuestion = question;
         this.selectedQuestion.status = questionStatuses.selected;
-        this._answers = this.service.fillAnswers(
-          this.selectedQuestion.correctAnswer
-        );
+
+        // this._answers = this.service.fillAnswers(
+        //   this.selectedQuestion.correctAnswer
+        // );
+        // this.answers$ = this.service.getAnswers(566).pipe(
+        //   map((val) => val)
+        // );
+        this.answers$ = this.service.getAnswers(this.selectedQuestion.correctAnswer);
+        // console.log(this.answers$.forEach(function (value){}));
       }
     }
   }

@@ -11,10 +11,10 @@ export class ExamService {
 
   quesions: questionType[] = [];
 
-  // answers: number[] = [];
+  answers: number[] = [1, 34];
 
   private questionSubject = new BehaviorSubject<questionType[]>(this.quesions);
-  // private answerSubject = new BehaviorSubject<number[]>(this.answers);
+  private answerSubject = new BehaviorSubject<number[]>(this.answers);
 
   fillTerm() {
     let arr = Array(5) // array size is 5
@@ -27,9 +27,10 @@ export class ExamService {
     return this.questionSubject.asObservable();
   }
 
-  // get answers$(): Observable<number[]> {
-  //   return this.answerSubject.asObservable();
-  // }
+  get answers$(): Observable<number[]> {
+    this.answers = this.fillAnswers(12);
+    return this.answerSubject.asObservable();
+  }
 
   constructor() {
     for (let i = 0; i < 5; i++) {
@@ -41,7 +42,19 @@ export class ExamService {
     }
   }
 
-  fillAnswers(correctAnswer: number) {
+  fillAnswers(correctAnswer: number): number[] {
+    //get random number of correct answer
+    let correctAnswerNum: number = Math.floor(Math.random() * 4);
+    let arr = Array(4) // array size is 5
+      .fill(undefined)
+      .map(() => Math.floor(50 * Math.random())); // numbers from 0-50 (exclusive)
+    // set correctAnswer value.
+    var x = arr.find((v) => v == 0);
+    arr[correctAnswerNum] = correctAnswer;
+    return arr;
+  }
+
+  getAnswers(correctAnswer: number): Observable<number[]> {
     //get random number of correct answer
     let correctAnswerNum: number = Math.floor(Math.random() * 4);
     let arr = Array(4) // array size is 5
@@ -49,6 +62,10 @@ export class ExamService {
       .map(() => Math.floor(50 * Math.random())); // numbers from 0-50 (exclusive)
     // set correctAnswer value.
     arr[correctAnswerNum] = correctAnswer;
-    return arr;
+
+    this.answers = Object.assign([], arr);
+    console.log(arr);
+    this.answerSubject = new BehaviorSubject<number[]>(this.answers);
+    return this.answerSubject.asObservable();
   }
 }

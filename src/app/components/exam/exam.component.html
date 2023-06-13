@@ -27,7 +27,7 @@
             </tr>
             <tr>
               <div>
-                <td *ngFor="let answer of answers">
+                <td *ngFor="let answer of answers$ | async">
                   <button [ngClass]="getAnswerClass()" (click)="checkAnswer(answer)">{{answer}}</button>
                 </td>
               </div>
