@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ExamService } from 'src/app/services/exam.service';
 import { Observable, map, tap } from 'rxjs';
-import { questionStatuses, questionType } from 'src/Common';
+import { questionStatuses, questionType } from 'src/app/common/exam';
 
 @Component({
   selector: 'app-exam',

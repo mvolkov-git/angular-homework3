@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { questionStatuses, questionType } from 'src/Common';
+import { questionStatuses, questionType } from 'src/app/common/exam';
 
 @Injectable({
   providedIn: 'root',
@@ -41,7 +41,6 @@ export class ExamService {
     }
   }
 
-
   fillAnswers(correctAnswer: number) {
     //get random number of correct answer
     let correctAnswerNum: number = Math.floor(Math.random() * 4);
@@ -52,5 +51,4 @@ export class ExamService {
     arr[correctAnswerNum] = correctAnswer;
     return arr;
   }
-
 }

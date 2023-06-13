@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map, share } from 'rxjs';
-import { User } from '../user';
+import { User } from '../common/user';
 
 type Post = {
   body: string;
