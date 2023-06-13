@@ -1,4 +1,3 @@
-
 <h2>Exam for genius</h2>
 <br>
 <div>
@@ -10,27 +9,8 @@
           <table>
             <tr *ngFor="let question of quesions$ | async">
               <td style="width: 150px;">
-                <!-- <button [ngClass]="{
-                    'button-question': question.status == 0,
-                    'question selected-question green': question.status == 1,
-                    'question correct-answered-question': question.status == 2,
-                    'question wrong-answered-question': question.status === 3,
-              }" (click)="selectQuestion(question)">{{question.status}}</button> -->
-
-
-                <button [ngClass]="getClass(question.status)"
-                (click)="selectQuestion(question)">{{question.content}}</button>
-
-                <!-- <button  class="question selected-question"  (click)="selectQuestion(question)">{{question.content}}</button> -->
-                <!-- <button [ngClass]="(question.status ==0) ? 'red': (answer =='20') ? 'amber':'transparent " (click)="selectQuestion(question)">{{question.content}}</button> -->
-                <!-- <button [ngClass]="'button-question selected-question'" [ngStyle]="{'background-color': (question.status === 1)
-                        ? 'lightblue'
-                        : (question.status === 2)
-                            ? 'lightgreen'
-                            : (question.status === 3)
-                                ? 'red'
-                                : 'lightgray' }" (click)="selectQuestion(question)">{{question.content}}</button> -->
-
+                <button [ngClass]="getQuestionClass(question.status)"
+                  (click)="selectQuestion(question)">{{question.content}}</button>
               </td>
             </tr>
           </table>
@@ -48,7 +28,7 @@
             <tr>
               <div>
                 <td *ngFor="let answer of answers">
-                  <button class='answer' (click)="checkAnswer(answer)">{{answer}}</button>
+                  <button [ngClass]="getAnswerClass()" (click)="checkAnswer(answer)">{{answer}}</button>
                 </td>
               </div>
             </tr>

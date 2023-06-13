@@ -12,7 +12,7 @@ export class ExamComponent {
   selectedQuestion: questionType | undefined;
   displayedQuestion: string = '';
   grade: number = 0;
-  toggle = true;
+  // toggle = true;
 
   private _answers: number[] = [];
   public get answers() {
@@ -25,19 +25,29 @@ export class ExamComponent {
 
   // answers$: Observable<number[]> = this.service.answers$;
 
-  public getClass(status: questionStatuses) {
+  public getQuestionClass(status: questionStatuses) {
     switch (status) {
       case questionStatuses.new:
-        return 'button-question';
+        return this.selectedQuestion != undefined &&
+          this.selectedQuestion.status === questionStatuses.selected
+          ? 'button-question disabled'
+          : 'button-question';
       case questionStatuses.selected:
-        return 'button-question selected-question';
+        return 'button-question selected-question disabled';
       case questionStatuses.correct:
-        return 'button-question  correct-answered-question';
+        return 'button-question  correct-answered-question disabled';
       case questionStatuses.wrong:
-        return 'button-question  wrong-answered-question';
+        return 'button-question  wrong-answered-question disabled';
       default:
         return 'button-question';
     }
+  }
+
+  public getAnswerClass() {
+    if (this.selectedQuestion && this.selectedQuestion.status > 1) {
+      return 'answer disabled';
+    }
+    return 'answer';
   }
 
   selectQuestion(question: questionType) {
@@ -62,8 +72,6 @@ export class ExamComponent {
         this._answers = this.service.fillAnswers(
           this.selectedQuestion.correctAnswer
         );
-        // console.log(question.status);
-        // console.log(this.selectedQuestion.content);
       }
     }
   }
@@ -106,8 +114,12 @@ export class ExamComponent {
         this.selectedQuestion.status = questionStatuses.wrong;
       }
       // this._answers = [];
-      this.toggle = !this.toggle;
-      console.log(result);
+      // this.toggle = !this.toggle;
+      console.log(
+        this.getSelectedQuestionContent() +
+          ': ' +
+          (result ? 'correct' : 'wrong')
+      );
     }
   }
 }

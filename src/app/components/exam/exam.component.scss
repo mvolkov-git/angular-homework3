@@ -13,20 +13,24 @@
   margin-bottom: 10px;
   vertical-align: top;
   border-radius: 6px;
-   width: 100px;
+  width: 100px;
   height: 30px;
   text-align: center;
 }
 
-
 .selected-question {
   //  .question;
-  background-color: greenyellow;
+  background-color: lightblue;
+}
+
+.disabled {
+  pointer-events: none;
+  // opacity: 0.3;
 }
 
 button {
   border: 1px solid #0066cc;
-//  background-color: #0099cc;
+  //  background-color: #0099cc;
   color: black;
   padding: 5px 10px;
 }
@@ -38,19 +42,10 @@ button:hover {
   // padding: 5px 10px;
 }
 
-// button:disabled,
-// button[disabled]{
-//   border: 1px solid #999999;
-//   background-color: #cccccc;
-//   color: #666666;
-// }
-
-
 button:focus {
   outline: none;
   box-shadow: 0 0 0 3px lightskyblue;
 }
-
 
 .answer-pad {
   background: #f0f0f0; /* Цвет фона */
@@ -65,13 +60,13 @@ button:focus {
 }
 
 .correct-answered-question {
-  //  .question;
+  color: black;
   background-color: lightgreen;
 }
 
 .wrong-answered-question {
   //  .question;
-  background-color: red;
+  background-color: rgb(250, 104, 104)
 }
 .selected-query-content {
   width: 300;
