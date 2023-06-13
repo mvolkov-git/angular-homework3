@@ -22,7 +22,7 @@ export class ExamComponent {
 
   quesions$: Observable<questionType[]> = this.service.quesions$;
 
-  answers$: Observable<number[]> = new Observable<number[]>;// = this.service.answers$;
+  answers$: Observable<number[]> = new Observable<number[]>();
 
   public getQuestionClass(status: questionStatuses) {
     switch (status) {
@@ -50,35 +50,11 @@ export class ExamComponent {
   }
 
   selectQuestion(question: questionType) {
-    let enabled: boolean = true;
-    if (question.status == questionStatuses.new) {
-      this.quesions$.forEach(function (value) {
-        for (let i = 0; i < 5; i++) {
-          // console.log(i + " - " + value.indexOf(question));
-          if (
-            value[i].status === questionStatuses.selected &&
-            value.indexOf(question) != i
-          ) {
-            enabled = false;
-            // alert('Answer to selected question');
-          }
-        }
-      });
-
-      if (enabled) {
-        this.selectedQuestion = question;
-        this.selectedQuestion.status = questionStatuses.selected;
-
-        // this._answers = this.service.fillAnswers(
-        //   this.selectedQuestion.correctAnswer
-        // );
-        // this.answers$ = this.service.getAnswers(566).pipe(
-        //   map((val) => val)
-        // );
-        this.answers$ = this.service.getAnswers(this.selectedQuestion.correctAnswer);
-        // console.log(this.answers$.forEach(function (value){}));
-      }
-    }
+    this.selectedQuestion = question;
+    this.selectedQuestion.status = questionStatuses.selected;
+    this.answers$ = this.service.getAnswers(
+      this.selectedQuestion.correctAnswer
+    );
   }
 
   getSelectedQuestionContent() {
@@ -91,21 +67,17 @@ export class ExamComponent {
           (this.selectedQuestion.studentAnswer ?? '?');
   }
 
-  // resetExam() {
-  //   alert('xcv');
-  //   console.log('resetExam');
-  // }
+  resetExam() {
+    window.location.reload();
+  }
 
   setQuestionStatus(question: questionType, status: questionStatuses) {
     question.status = status;
     return question;
   }
 
-  ngOnInit() {
-    // this._answers = this.fillRandomArray();
-  }
-
   checkAnswer(studentAnswer: number) {
+    //  this.service.quesions$.subscribe((data)=> (console.log(data)));
     if (
       this.selectedQuestion != null &&
       this.selectedQuestion.status == questionStatuses.selected
@@ -118,8 +90,6 @@ export class ExamComponent {
       } else {
         this.selectedQuestion.status = questionStatuses.wrong;
       }
-      // this._answers = [];
-      // this.toggle = !this.toggle;
       console.log(
         this.getSelectedQuestionContent() +
           ': ' +

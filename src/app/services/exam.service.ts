@@ -11,7 +11,7 @@ export class ExamService {
 
   quesions: questionType[] = [];
 
-  answers: number[] = [1, 34];
+  answers: number[] = [];
 
   private questionSubject = new BehaviorSubject<questionType[]>(this.quesions);
   private answerSubject = new BehaviorSubject<number[]>(this.answers);
@@ -27,11 +27,6 @@ export class ExamService {
     return this.questionSubject.asObservable();
   }
 
-  get answers$(): Observable<number[]> {
-    this.answers = this.fillAnswers(12);
-    return this.answerSubject.asObservable();
-  }
-
   constructor() {
     for (let i = 0; i < 5; i++) {
       this.quesions.push({
@@ -42,29 +37,20 @@ export class ExamService {
     }
   }
 
-  fillAnswers(correctAnswer: number): number[] {
-    //get random number of correct answer
-    let correctAnswerNum: number = Math.floor(Math.random() * 4);
-    let arr = Array(4) // array size is 5
-      .fill(undefined)
-      .map(() => Math.floor(50 * Math.random())); // numbers from 0-50 (exclusive)
-    // set correctAnswer value.
-    var x = arr.find((v) => v == 0);
-    arr[correctAnswerNum] = correctAnswer;
-    return arr;
-  }
-
   getAnswers(correctAnswer: number): Observable<number[]> {
     //get random number of correct answer
     let correctAnswerNum: number = Math.floor(Math.random() * 4);
-    let arr = Array(4) // array size is 5
+    this.answers = Array(4)
       .fill(undefined)
       .map(() => Math.floor(50 * Math.random())); // numbers from 0-50 (exclusive)
-    // set correctAnswer value.
-    arr[correctAnswerNum] = correctAnswer;
-
-    this.answers = Object.assign([], arr);
-    console.log(arr);
+    // set correctAnswer value instead of 0 or to random element.
+    let i0 = this.answers.findIndex((el) => el === 0);
+    if (i0 != -1) {
+      // found element = 0, change it to correctAnswer
+      this.answers[i0] = correctAnswer;
+    } else {
+      this.answers[correctAnswerNum] = correctAnswer;
+    }
     this.answerSubject = new BehaviorSubject<number[]>(this.answers);
     return this.answerSubject.asObservable();
   }
