@@ -1,4 +1,4 @@
-import { Component, Injectable, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { ExamService } from 'src/app/services/exam.service';
 import { Observable, map, tap } from 'rxjs';
 import { questionStatuses, questionType } from 'src/Common';
@@ -24,6 +24,21 @@ export class ExamComponent {
   quesions$: Observable<questionType[]> = this.service.quesions$;
 
   // answers$: Observable<number[]> = this.service.answers$;
+
+  public getClass(status: questionStatuses) {
+    switch (status) {
+      case questionStatuses.new:
+        return 'button-question';
+      case questionStatuses.selected:
+        return 'button-question selected-question';
+      case questionStatuses.correct:
+        return 'button-question  correct-answered-question';
+      case questionStatuses.wrong:
+        return 'button-question  wrong-answered-question';
+      default:
+        return 'button-question';
+    }
+  }
 
   selectQuestion(question: questionType) {
     let enabled: boolean = true;
