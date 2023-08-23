@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from './common/user';
 import { HttpService } from './services/http.service';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, interval } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -31,7 +31,7 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    //this.users = this.httpService.getUsers();
+    interval(1000).subscribe(x=>console.log(x))
 
     this.user = new User('aa3a', 23);
     this.users.push(new User('vbvnb', 234));
