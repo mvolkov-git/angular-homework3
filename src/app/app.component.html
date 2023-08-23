@@ -1,21 +1,52 @@
-<app-exam></app-exam>
 <!-- <app-exam></app-exam> -->
-<!-- <p>users: {{users}}</p>
+
+<!-- <app-httpdata></app-httpdata> -->
+
 <div>
   <ng-container *ngIf="user">
-    <h2> {{user.name}} : {{user.age}}</h2>
+    <h2>{{user.name}} : {{user.age}}</h2>
   </ng-container>
 </div>
 
-<div>
+
+<table>
+  <tr *ngFor="let user of users">
+    <td>{{user.name}} : {{user.age}}</td>
+  </tr>
+</table>
+
+<!-- <div>
   <ng-container *ngIf="json$ | async as myData">
     <h1>{{myData.title}}</h1>
     <h2>{{myData.body}}</h2>
   </ng-container>
 </div> -->
 
-<!-- <app-data></app-data>
-<br>
+<!-- <div>
+  <ng-container *ngIf="json$ | async as myData">
+    <h1>{{myData.title}}</h1>
+    <h2>{{myData.body}}</h2>
+  </ng-container>
+</div> -->
+
+<div>
+  <ng-container *ngIf="test$ | async as myData1">
+    <h1>{{myData1.title}}</h1>
+    <h2>{{myData1.body}}</h2>
+  </ng-container>
+</div>
+
+
+<!-- <div>
+  {{test$}}
+
+  <ng-container *ngIf="test$ | async as dd">
+      <h1>{{dd}}</h1>
+  </ng-container>
+</div> -->
+
+<!-- <app-data></app-data> -->
+<!--<br>
 <hr>
 <hr>
 <br>
