@@ -13,13 +13,9 @@ export class DataComponent {
   cutOff = 0;
 
   counter = 0;
+  a = 0;
+  counter$: Observable<number> | undefined;
   myMethodTesterCounter = 0;
-
-  counter$: Observable<number> = this.dataService.counter$.pipe(
-    //delay(2000)
-    // map(val => val / 2),
-    filter((val) => val > this.cutOff)
-  );
 
   subs = new Subscription();
 
@@ -27,26 +23,32 @@ export class DataComponent {
     return this.dataService.getData();
   }
 
-  constructor(private dataService: DataService) {}
+   constructor(private dataService: DataService) {}
 
   addItem(name: string) {
     this.dataService.addData(name);
     this.counter = this.dataService.counter;
     this.myMethodTesterCounter = this.dataService.myMethodTesterCounter;
+
+    if (this.dataService.counter >= 7) {
+      this.subs.unsubscribe();
+    }
   }
 
   ngOnInit() {
     this.items = this.dataService.getData();
     this.counter = this.dataService.counter;
+    this.counter$ = this.dataService.counter$.pipe(
+      delay(1000),
+      //  map(val => val / 2),
+      filter((val) => val > this.cutOff),
+    );
 
     this.subs.add(
       this.dataService.myMethod().subscribe((arg) => {
         // alert(this.dataService.myMethodTesterCounter);
-        console.log('myMethod called');
+        console.log('myMethod called ' +  this.myMethodTesterCounter);
       })
     );
-    // this.subs.add(
-    //   this.counter$.subscribe((arg) => this.myMethodTesterCounter++)
-    // );
   }
 }

@@ -31,7 +31,7 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    interval(1000).subscribe(x=>console.log(x))
+    // interval(1000).subscribe(x=>console.log(x))
 
     this.user = new User('aa3a', 23);
     this.users.push(new User('vbvnb', 234));
