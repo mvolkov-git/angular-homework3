@@ -40,7 +40,7 @@ export class AppComponent {
     // this.http.get('assets/user.json').subscribe({next:(data:any) => this.user = new User(data.name, data.age)});
     // this.httpService.getUsers().subscribe({next:(data: User[]) => this.users=data});
     this.httpService.getUsers().subscribe({
-      next: (data: User[]) => this.users.push(new User('eee', 45)),
+      next: (data: User[]) => this.users.push(new User('ee44e', 45)),
     });
     this.test$ = this.httpService.test$;
     console.log('qwXXn eqe');

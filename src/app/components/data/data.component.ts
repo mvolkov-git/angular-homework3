@@ -27,7 +27,7 @@ export class DataComponent {
 
   addItem(name: string) {
     this.dataService.addData(name);
-    this.counter = this.dataService.counter;
+    this.counter = this.dataService.counter * 10;
     this.myMethodTesterCounter = this.dataService.myMethodTesterCounter;
 
     if (this.dataService.counter >= 7) {
@@ -45,9 +45,9 @@ export class DataComponent {
     );
 
     this.subs.add(
-      this.dataService.myMethod().subscribe((arg) => {
+      this.dataService.myMethod().subscribe((data) => {
         // alert(this.dataService.myMethodTesterCounter);
-        console.log('myMethod called ' +  this.myMethodTesterCounter);
+        console.log('myMethod called ' +  this.myMethodTesterCounter + ' ' + data);
       })
     );
   }

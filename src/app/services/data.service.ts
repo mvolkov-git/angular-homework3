@@ -26,8 +26,8 @@ export class DataService {
   myMethod()  {
     // this.data.push("name");
     // this.counter = this.data.length;
-    //this.counterSubject.next(this.counter);
-    this.myMethodTesterCounter++;
+    // this.counterSubject.next(this.counter);
+    // this.myMethodTesterCounter++;
     return this.counter$;
   }
 
@@ -36,10 +36,15 @@ export class DataService {
   }
 
   addData(name: string) {
-    this.data.push(name);
-    this.counter = this.data.length;
+    // this.data.push(name);
+    // this.counter = this.data.length;
+
+    this.counter++;
+
     this.counterSubject.next(this.counter);
     this.myMethodTesterCounter++;
+
+
   }
 
   // doNext()
